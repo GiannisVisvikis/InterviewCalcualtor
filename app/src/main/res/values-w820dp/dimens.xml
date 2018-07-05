@@ -1,0 +1,6 @@
+<resources>
+
+    <dimen name="display_size">32sp</dimen>
+    <dimen name="letter_size">20sp</dimen>
+
+</resources>

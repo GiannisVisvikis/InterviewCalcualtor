@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2D3D45">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@color/textcolor"
+        android:background="@color/colorPrimary"
+        android:id="@+id/theToolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:weightSum="7"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="0.0"
+            android:gravity="center"
+            android:id="@+id/textview"
+            android:background="@drawable/textview_back"
+            android:textSize="@dimen/display_size"
+            android:layout_marginBottom="15dp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="19"
+            android:layout_weight="1"
+            android:layout_marginBottom="15dp">
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back_darker"
+                android:text="C/E"
+                android:id="@+id/clear_all"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back_darker"
+                android:text="C"
+                android:id="@+id/clear_last"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="+/-"
+                android:id="@+id/plus_minus"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="/"
+                android:id="@+id/division"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"
+                android:onClick="handleSymbol"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="19"
+            android:layout_weight="1"
+            android:layout_marginBottom="15dp">
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="7"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"
+                android:onClick="addDigit"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="8"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"
+                android:onClick="addDigit"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="9"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"
+                android:onClick="addDigit"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="*"
+                android:id="@+id/multiplication"
+                android:textColor="@color/textcolor"
+                android:onClick="handleSymbol"
+                android:textSize="@dimen/letter_size"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="19"
+            android:layout_weight="1"
+            android:layout_marginBottom="15dp">
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="4"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"
+                android:onClick="addDigit"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="5"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"
+                android:onClick="addDigit"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="6"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"
+                android:onClick="addDigit"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="-"
+                android:id="@+id/minus"
+                android:textColor="@color/textcolor"
+                android:onClick="handleSymbol"
+                android:textSize="@dimen/letter_size"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="19"
+            android:layout_weight="1"
+            android:layout_marginBottom="15dp">
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="1"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"
+                android:onClick="addDigit"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="2"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"
+                android:onClick="addDigit"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="3"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"
+                android:onClick="addDigit"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="+"
+                android:id="@+id/plus"
+                android:textColor="@color/textcolor"
+                android:onClick="handleSymbol"
+                android:textSize="@dimen/letter_size"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="19"
+            android:layout_weight="1"
+            android:layout_marginBottom="15dp">
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="9"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="0"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"
+                android:onClick="addDigit"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="."
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"
+                android:onClick="addDigit"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_back"
+                android:text="="
+                android:id="@+id/equals"
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/letter_size"/>
+
+        </LinearLayout>
+
+        <!-- put a long button for currency here -->
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/button_back"
+            android:textSize="@dimen/letter_size"
+            android:textColor="@color/textcolor"
+            android:text="$"
+            android:id="@+id/convert"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</LinearLayout>
