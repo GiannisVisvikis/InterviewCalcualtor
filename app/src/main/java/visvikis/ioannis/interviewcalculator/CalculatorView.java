@@ -14,6 +14,7 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
     private final String FIRST_ARG_TAG = "FIRST_ARG";
     private final String SECOND_ARG_TAG = "SECOND_ARG";
     private final String THIRD_ARG_TAG = "THIRD_ARG";
+    private final String DISPLAYED_VALUE_TAG = "DISPLAYED_ARG";
 
     private ThePresenter mPresenter;
 
@@ -36,6 +37,8 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator_view);
 
+        displayTxtView = findViewById(R.id.textview);
+
         if(savedInstanceState == null){
             args = new String[3];
         }
@@ -43,6 +46,7 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
             args[0] = savedInstanceState.getString(FIRST_ARG_TAG);
             args[1] = savedInstanceState.getString(SECOND_ARG_TAG);
             args[2] = savedInstanceState.getString(THIRD_ARG_TAG);
+            displayTxtView.setText(savedInstanceState.getString(DISPLAYED_VALUE_TAG));
         }
 
 
@@ -51,8 +55,6 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         getSupportActionBar().setDisplayShowTitleEnabled(true);
 
         mPresenter = new ThePresenter(this);
-
-        displayTxtView = findViewById(R.id.textview);
 
 
         setDigitButtons();
@@ -91,15 +93,22 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
             @Override
             public void onClick(View v)
             {
-                if(args[1] != null){
+
+                String second = displayTxtView.getText().toString();
+
+                if(second.equalsIgnoreCase("") && args[1] != null){
 
                     if(args[1] == "/" || args[1] == "*")
                         args[2] = "1";
                     else
                         args[2] = "0";
 
-                    askForResult(args);
                 }
+                else{
+                    args[2] = second;
+                }
+
+                askForResult(args);
             }
         });
     }
@@ -185,7 +194,7 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         outState.putString(FIRST_ARG_TAG, args[0]);
         outState.putString(SECOND_ARG_TAG, args[1]);
         outState.putString(THIRD_ARG_TAG, args[2]);
-
+        outState.putString(DISPLAYED_VALUE_TAG, displayTxtView.getText().toString());
     }
 
 
@@ -228,8 +237,8 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         {
             String current = displayTxtView.getText().toString();
             String toAdd = ((AppCompatButton) v).getText().toString();
-
-            current += toAdd;
+            if(current.length() + toAdd.length() <= 14)
+                current += toAdd;
             displayTxtView.setText(current);
         }
     }

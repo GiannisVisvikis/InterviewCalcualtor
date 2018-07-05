@@ -5,13 +5,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2D3D45">
+    android:background="#4A8BE6">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/the_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         app:titleTextColor="@color/textcolor"
         app:title="@string/app_name"
         android:elevation="5dp"
