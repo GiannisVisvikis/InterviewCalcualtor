@@ -132,7 +132,7 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         findViewById(R.id.seven).setOnClickListener(digitListener);
         findViewById(R.id.eight).setOnClickListener(digitListener);
         findViewById(R.id.nine).setOnClickListener(digitListener);
-        findViewById(R.id.dot.setOnClickListener(digitListener);
+        findViewById(R.id.dot).setOnClickListener(digitListener);
     }
 
 
