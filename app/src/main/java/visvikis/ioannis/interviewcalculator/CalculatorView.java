@@ -3,10 +3,12 @@ package visvikis.ioannis.interviewcalculator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
 public class CalculatorView extends AppCompatActivity implements ProjectInterfaces.TheViewInteface
 {
@@ -15,6 +17,11 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
     private final String SECOND_ARG_TAG = "SECOND_ARG";
     private final String THIRD_ARG_TAG = "THIRD_ARG";
     private final String DISPLAYED_VALUE_TAG = "DISPLAYED_ARG";
+    private final String RESULT_IN_TAG = "RESULT_IN";
+    private final String FROM_SPINNER_INDEX = "FROM_SPINNER_INDEX";
+    private final String TO_SPINNER_INDEX = "TO_SPINNER_INDEX";
+
+    private boolean resultIn = false;
 
     private ThePresenter mPresenter;
 
@@ -27,8 +34,11 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
     private AppCompatButton clearLastButton;
     private AppCompatButton plusMinusButton;
     private AppCompatButton equalsButton;
-    private AppCompatButton currencyButton;
+    private AppCompatButton conversionButton;
 
+
+    private AppCompatSpinner fromSpinner;
+    private AppCompatSpinner toSpinner;
 
 
     @Override
@@ -47,6 +57,7 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
             args[1] = savedInstanceState.getString(SECOND_ARG_TAG);
             args[2] = savedInstanceState.getString(THIRD_ARG_TAG);
             displayTxtView.setText(savedInstanceState.getString(DISPLAYED_VALUE_TAG));
+            resultIn = savedInstanceState.getBoolean(RESULT_IN_TAG);
         }
 
 
@@ -56,13 +67,11 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
         mPresenter = new ThePresenter(this);
 
-
         setDigitButtons();
 
         setClearButtons();
 
         setSymbolButtons();
-
 
         //set plus or minus button and functionality
         plusMinusButton = findViewById(R.id.plus_minus);
@@ -102,7 +111,6 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
                         args[2] = "1";
                     else
                         args[2] = "0";
-
                 }
                 else{
                     args[2] = second;
@@ -111,6 +119,20 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
                 askForResult(args);
             }
         });
+    }
+
+
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(FIRST_ARG_TAG, args[0]);
+        outState.putString(SECOND_ARG_TAG, args[1]);
+        outState.putString(THIRD_ARG_TAG, args[2]);
+        outState.putString(DISPLAYED_VALUE_TAG, displayTxtView.getText().toString());
     }
 
 
@@ -170,31 +192,12 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
             @Override
             public void onClick(View v) //if there is entry, remove it. Else if there is symbol selected, cancel it
             {
-                boolean hasEntry = !displayTxtView.getText().toString().equalsIgnoreCase("0");
+                boolean hasEntry = !displayTxtView.getText().toString().equalsIgnoreCase("");
 
-                if (hasEntry)
-                    displayTxtView.setText("");
-                else if (args[1] != null) {
-                    args[1] = null;  //cancels operation that might have been selected
-                    if(args[0].equalsIgnoreCase("0"))
-                        displayTxtView.setText("");
-                    else
-                        displayTxtView.setText(args[0]);
-                }
+                if (hasEntry) //delete last digit from the display
+                    displayTxtView.setText(displayTxtView.getText().toString().substring(0, displayTxtView.getText().toString().length() -1));
             }
         });
-    }
-
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState)
-    {
-        super.onSaveInstanceState(outState);
-
-        outState.putString(FIRST_ARG_TAG, args[0]);
-        outState.putString(SECOND_ARG_TAG, args[1]);
-        outState.putString(THIRD_ARG_TAG, args[2]);
-        outState.putString(DISPLAYED_VALUE_TAG, displayTxtView.getText().toString());
     }
 
 
@@ -214,9 +217,9 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         args[0] = null;
         args[1] = null;
         args[2] = null;
+
+        resultIn = true;
     }
-
-
 
 
 
@@ -235,11 +238,17 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         @Override
         public void onClick(View v)
         {
+
+            if(resultIn)
+                displayTxtView.setText("");
+
             String current = displayTxtView.getText().toString();
             String toAdd = ((AppCompatButton) v).getText().toString();
             if(current.length() + toAdd.length() <= 14)
                 current += toAdd;
             displayTxtView.setText(current);
+
+            resultIn = false;
         }
     }
 
@@ -261,6 +270,12 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
             displayTxtView.setText("");
         }
     }
+
+
+
+    //CUSTOM ADAPTER FOR THE SPINNERS
+
+    private class ToConvertAdapter extends ArrayAdapter<CurrencyInfo>
 
 
 

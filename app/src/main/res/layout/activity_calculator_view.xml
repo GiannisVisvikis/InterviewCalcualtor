@@ -18,355 +18,424 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <LinearLayout
+    <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="25dp"
+        android:padding="10dp"
         android:weightSum="7"
         android:gravity="center"
         android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatTextView
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:id="@+id/textview"
-            android:background="@drawable/textview_back"
-            android:textSize="@dimen/display_size"
-            android:layout_marginBottom="15dp"/>
+            android:layout_height="match_parent"
+            app:cardCornerRadius="5dp"
+            android:elevation="10dp">
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="19"
-            android:layout_weight="1"
-            android:layout_marginBottom="15dp">
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/button_back_darker"
-                android:text="C/E"
-                android:id="@+id/clear_all"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"/>
+                android:orientation="vertical"
+                android:layout_margin="10dp">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:elevation="5dp"
+                    android:id="@+id/textview"
+                    android:background="@drawable/textview_back"
+                    android:textSize="@dimen/display_size"
+                    android:layout_marginBottom="15dp"/>
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back_darker"
-                android:text="C"
-                android:id="@+id/clear_last"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"/>
+                <!-- put a long button for currency here -->
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="17">
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="+/-"
-                android:id="@+id/plus_minus"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"/>
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:id="@+id/from_spinner"/>
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="/"
-                android:id="@+id/division"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"/>
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:id="@+id/to_spinner"/>
 
-        </LinearLayout>
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
 
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:background="@drawable/button_back"
+                        android:textSize="@dimen/letter_size"
+                        android:textColor="@color/textcolor"
+                        android:text="Convert"
+                        android:textAllCaps="false"
+                        android:elevation="5dp"
+                        android:id="@+id/convert"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="19"
-            android:layout_weight="1"
-            android:layout_marginBottom="15dp">
+                </android.support.v7.widget.LinearLayoutCompat>
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="7"
-                android:id="@+id/seven"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"/>
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:weightSum="19"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="15dp">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back_darker"
+                        android:text="C/E"
+                        android:elevation="5dp"
+                        android:id="@+id/clear_all"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"/>
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="8"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"
-                android:id="@+id/eight"/>
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back_darker"
+                        android:text="C"
+                        android:elevation="5dp"
+                        android:id="@+id/clear_last"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"/>
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="9"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"
-                android:id="@+id/nine"/>
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="+/-"
+                        android:elevation="5dp"
+                        android:id="@+id/plus_minus"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"/>
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="*"
-                android:id="@+id/multiplication"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"/>
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
 
-        </LinearLayout>
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="/"
+                        android:elevation="5dp"
+                        android:id="@+id/division"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"/>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="19"
-            android:layout_weight="1"
-            android:layout_marginBottom="15dp">
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="4"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"
-                android:id="@+id/four"/>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="5"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"
-                android:id="@+id/five"/>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="6"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"
-                android:id="@+id/six"/>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="-"
-                android:id="@+id/minus"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"/>
-
-        </LinearLayout>
+                </android.support.v7.widget.LinearLayoutCompat>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="19"
-            android:layout_weight="1"
-            android:layout_marginBottom="15dp">
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:weightSum="19"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="15dp">
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="1"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"
-                android:id="@+id/one"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="7"
+                        android:elevation="5dp"
+                        android:id="@+id/seven"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"/>
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="2"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"
-                android:id="@+id/two"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="8"
+                        android:elevation="5dp"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"
+                        android:id="@+id/eight"/>
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="3"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"
-                android:id="@+id/three"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="9"
+                        android:elevation="5dp"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"
+                        android:id="@+id/nine"/>
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="+"
-                android:id="@+id/plus"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="*"
+                        android:elevation="5dp"
+                        android:id="@+id/multiplication"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"/>
 
-        </LinearLayout>
+                </android.support.v7.widget.LinearLayoutCompat>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="19"
-            android:layout_weight="1"
-            android:layout_marginBottom="15dp">
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="9"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="0"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"
-                android:id="@+id/zero"/>
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:weightSum="19"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="15dp">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="4"
+                        android:elevation="5dp"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"
+                        android:id="@+id/four"/>
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="."
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"
-                android:id="@+id/dot"/>
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="5"
+                        android:elevation="5dp"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"
+                        android:id="@+id/five"/>
 
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:background="@drawable/button_back"
-                android:text="="
-                android:id="@+id/equals"
-                android:textColor="@color/textcolor"
-                android:textSize="@dimen/letter_size"/>
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
 
-        </LinearLayout>
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="6"
+                        android:elevation="5dp"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"
+                        android:id="@+id/six"/>
 
-        <!-- put a long button for currency here -->
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
 
-        <android.support.v7.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@drawable/button_back"
-            android:textSize="@dimen/letter_size"
-            android:textColor="@color/textcolor"
-            android:text="$"
-            android:id="@+id/convert"
-            android:layout_weight="1"/>
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="-"
+                        android:elevation="5dp"
+                        android:id="@+id/minus"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"/>
 
-    </LinearLayout>
+                </android.support.v7.widget.LinearLayoutCompat>
+
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:weightSum="19"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="15dp">
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="1"
+                        android:elevation="5dp"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"
+                        android:id="@+id/one"/>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="2"
+                        android:elevation="5dp"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"
+                        android:id="@+id/two"/>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="3"
+                        android:elevation="5dp"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"
+                        android:id="@+id/three"/>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="+"
+                        android:elevation="5dp"
+                        android:id="@+id/plus"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:weightSum="19"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="15dp">
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="9"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="0"
+                        android:elevation="5dp"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"
+                        android:id="@+id/zero"/>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="."
+                        android:elevation="5dp"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"
+                        android:id="@+id/dot"/>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_back"
+                        android:text="="
+                        android:elevation="5dp"
+                        android:id="@+id/equals"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/letter_size"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+        </android.support.v7.widget.CardView>
+
+    </android.support.v7.widget.LinearLayoutCompat>
 
 </LinearLayout>
