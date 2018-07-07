@@ -16,9 +16,6 @@ import java.io.IOException;
 public class TheModel
 {
     //will be fed back to the user after the operation is performed
-    private String result;
-
-
 
     public String calculate(String[] args) throws IllegalArgumentException
     {
@@ -73,6 +70,12 @@ public class TheModel
 
         return result;
     }
+
+
+
+
+
+
 
 
 }

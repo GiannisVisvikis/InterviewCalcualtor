@@ -12,13 +12,11 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,8 +52,8 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
         //initialize the spinners for conversion
 
-        AppCompatSpinner fromSpinner = findViewById(R.id.from_spinner);
-        AppCompatSpinner toSpinner = findViewById(R.id.to_spinner);
+        final AppCompatSpinner fromSpinner = findViewById(R.id.from_spinner);
+        final AppCompatSpinner toSpinner = findViewById(R.id.to_spinner);
 
         ArrayList<CurrencyInfo> spinnerObjects = initializeSpinnerObjects();
 
@@ -101,37 +99,36 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
             @Override
             public void onClick(View v)
             {
-                String txtToConvert = displayTxtView.getText().toString();
-                String txtToAdd;
+                if(displayTxtView.getText().toString().length() > 0){
+                    String txtToConvert = displayTxtView.getText().toString();
+                    String txtToAdd;
 
-                char first = txtToConvert.charAt(0);
+                    char first = txtToConvert.charAt(0);
 
-                if(Character.isDigit(first))
-                    txtToAdd = '-' + txtToConvert;
-                else
-                    txtToAdd = txtToConvert.substring(1);
+                    if(Character.isDigit(first))
+                        txtToAdd = '-' + txtToConvert;
+                    else
+                        txtToAdd = txtToConvert.substring(1);
 
-                displayTxtView.setText(txtToAdd);
+                    displayTxtView.setText(txtToAdd);
+                }
 
             }
         });
 
         //set equals button
-        AppCompatButton equalsButton = findViewById(R.id.equals);
+        final AppCompatButton equalsButton = findViewById(R.id.equals);
         equalsButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-
                 if(args[1] != null){
                     String second = displayTxtView.getText().toString();
 
                     if(second.equalsIgnoreCase("") && args[1] != null){
 
-                        paizei malakia edw otan patas dia diairei me miden
-
-                        if(args[1] == "/" || args[1] == "*")
+                        if(args[1].equalsIgnoreCase("/") || args[1].equalsIgnoreCase("*"))
                             args[2] = "1";
                         else
                             args[2] = "0";
@@ -146,9 +143,36 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         });
 
 
-
         //Log.e("CLASS", toSpinner.getItemAtPosition(43).getClass().toString()); //Returns CurrencyInfo object
         //TODO Set the convert button asshole!!
+        AppCompatButton conversionButton = findViewById(R.id.convert);
+        conversionButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+    
+                if(!displayTxtView.getText().toString().equalsIgnoreCase("")) {
+
+                    String from = ((CurrencyInfo) fromSpinner.getSelectedItem()).getCode();
+                    String to = ((CurrencyInfo) toSpinner.getSelectedItem()).getCode();
+                    String amount = displayTxtView.getText().toString();
+
+                    if(!from.equalsIgnoreCase(to)){ //no need to convert the same currency
+
+                        try {
+                            Double.parseDouble(amount);
+                            mPresenter.askAPI(from, to, amount);
+                        }
+                        catch (NumberFormatException nfe){
+                            setResponse(getResources().getString(R.string.not_a_number));
+                        }
+                    }
+
+                }
+
+            }
+        });
 
     }
 
@@ -232,7 +256,12 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
                 boolean hasEntry = !displayTxtView.getText().toString().equalsIgnoreCase("");
 
                 if (hasEntry) //delete last digit from the display
-                    displayTxtView.setText(displayTxtView.getText().toString().substring(0, displayTxtView.getText().toString().length() -1));
+                {
+                    if(displayTxtView.getText().toString().charAt((0)) == '-' && displayTxtView.getText().toString().length() == 2)
+                        displayTxtView.setText("");
+                    else
+                     displayTxtView.setText(displayTxtView.getText().toString().substring(0, displayTxtView.getText().toString().length() - 1));
+                }
             }
         });
     }

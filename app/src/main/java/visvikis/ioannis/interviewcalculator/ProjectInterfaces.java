@@ -17,6 +17,8 @@ public interface ProjectInterfaces
 
     interface ThePresenterInterface{
 
+        void askAPI(String from, String to, String amount);
+
         void fetchResultFromModel(String[] args);
 
         Bitmap fetchFlag(Context applicationContext, String flagPath);
