@@ -57,36 +57,36 @@
                     android:layout_weight="1"
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
-                    android:weightSum="17">
+                    android:weightSum="20.2">
 
                     <android.support.v7.widget.AppCompatSpinner
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="5"
+                        android:layout_weight="7.5"
                         android:id="@+id/from_spinner"/>
 
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+                        android:layout_weight="0.5"/>
 
                     <android.support.v7.widget.AppCompatSpinner
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="5"
+                        android:layout_weight="7.5"
                         android:id="@+id/to_spinner"/>
 
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+                        android:layout_weight="0.5"/>
 
                     <android.support.v7.widget.AppCompatButton
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="5"
+                        android:layout_weight="4"
                         android:background="@drawable/button_back"
-                        android:textSize="@dimen/letter_size"
+                        android:textSize="@dimen/spinner_size"
                         android:textColor="@color/textcolor"
                         android:text="Convert"
                         android:textAllCaps="false"

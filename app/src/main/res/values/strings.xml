@@ -67,7 +67,6 @@
         <item>IDR</item>
         <item>ILS</item>
         <item>IMP</item>
-        <item>INR</item>
         <item>IQD</item>
         <item>IRR</item>
         <item>ISK</item>
@@ -89,8 +88,6 @@
         <item>LKR</item>
         <item>LRD</item>
         <item>LSL</item>
-        <item>LTL</item>
-        <item>LVL</item>
         <item>LYD</item>
         <item>MAD</item>
         <item>MDL</item>
@@ -166,7 +163,6 @@
         <item>XPF</item>
         <item>YER</item>
         <item>ZAR</item>
-        <item>ZMK</item>
         <item>ZMW</item>
         <item>ZWL</item>
     </string-array>

@@ -1,8 +1,17 @@
 package visvikis.ioannis.interviewcalculator;
 
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
+import java.io.IOException;
+
+
+
 /*
-    Will be used to perform the calculations
+    Will be used to perform the calculations, the uploads and the API calls
  */
 public class TheModel
 {
@@ -49,6 +58,21 @@ public class TheModel
 
 
 
+    public Bitmap getTheFlag(Context applicationContext, String flagPath) {
+
+        Bitmap result;
+
+        try{
+            //Log.e("FLAG_PATH", flagPath);
+            result = BitmapFactory.decodeStream(applicationContext.getAssets().open(flagPath));
+        }
+        catch (IOException io){
+            int resourceCode = (flagPath.contains("48")) ? R.drawable.unknown_48 : R.drawable.unknown_64;
+            result = BitmapFactory.decodeResource(applicationContext.getResources(), resourceCode);
+        }
+
+        return result;
+    }
 
 
 }

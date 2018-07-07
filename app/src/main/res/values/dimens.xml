@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="display_size">28sp</dimen>
+    <dimen name="display_size">23sp</dimen>
     <dimen name="letter_size">20sp</dimen>
+    <dimen name="spinner_size">14sp</dimen>
 
 </resources>

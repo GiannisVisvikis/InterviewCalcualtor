@@ -1,5 +1,8 @@
 package visvikis.ioannis.interviewcalculator;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+
 public interface ProjectInterfaces
 {
 
@@ -16,6 +19,7 @@ public interface ProjectInterfaces
 
         void fetchResultFromModel(String[] args);
 
+        Bitmap fetchFlag(Context applicationContext, String flagPath);
     }
 
 }

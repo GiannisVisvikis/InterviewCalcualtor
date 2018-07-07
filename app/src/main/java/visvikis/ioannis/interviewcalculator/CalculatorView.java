@@ -1,14 +1,26 @@
 package visvikis.ioannis.interviewcalculator;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CalculatorView extends AppCompatActivity implements ProjectInterfaces.TheViewInteface
 {
@@ -30,15 +42,6 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
     private AppCompatTextView displayTxtView;
 
-    private AppCompatButton clearAllButton;
-    private AppCompatButton clearLastButton;
-    private AppCompatButton plusMinusButton;
-    private AppCompatButton equalsButton;
-    private AppCompatButton conversionButton;
-
-
-    private AppCompatSpinner fromSpinner;
-    private AppCompatSpinner toSpinner;
 
 
     @Override
@@ -49,8 +52,24 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
         displayTxtView = findViewById(R.id.textview);
 
+        //initialize the spinners for conversion
+
+        AppCompatSpinner fromSpinner = findViewById(R.id.from_spinner);
+        AppCompatSpinner toSpinner = findViewById(R.id.to_spinner);
+
+        ArrayList<CurrencyInfo> spinnerObjects = initializeSpinnerObjects();
+
+        ConvertOptionsAdapter conversionAdapter = new ConvertOptionsAdapter(getApplicationContext(), R.layout.spinner_row, spinnerObjects);
+
+        fromSpinner.setAdapter(conversionAdapter);
+        toSpinner.setAdapter(conversionAdapter);
+
+
+        //Check prior state
         if(savedInstanceState == null){
             args = new String[3];
+            fromSpinner.setSelection(43);
+            toSpinner.setSelection(43);
         }
         else{
             args[0] = savedInstanceState.getString(FIRST_ARG_TAG);
@@ -58,6 +77,8 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
             args[2] = savedInstanceState.getString(THIRD_ARG_TAG);
             displayTxtView.setText(savedInstanceState.getString(DISPLAYED_VALUE_TAG));
             resultIn = savedInstanceState.getBoolean(RESULT_IN_TAG);
+            fromSpinner.setSelection(savedInstanceState.getInt(FROM_SPINNER_INDEX));
+            toSpinner.setSelection(savedInstanceState.getInt(TO_SPINNER_INDEX));
         }
 
 
@@ -74,7 +95,7 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         setSymbolButtons();
 
         //set plus or minus button and functionality
-        plusMinusButton = findViewById(R.id.plus_minus);
+        AppCompatButton plusMinusButton = findViewById(R.id.plus_minus);
         plusMinusButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -95,32 +116,41 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
             }
         });
 
-
-        equalsButton = findViewById(R.id.equals);
+        //set equals button
+        AppCompatButton equalsButton = findViewById(R.id.equals);
         equalsButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
 
-                String second = displayTxtView.getText().toString();
+                if(args[1] != null){
+                    String second = displayTxtView.getText().toString();
 
-                if(second.equalsIgnoreCase("") && args[1] != null){
+                    if(second.equalsIgnoreCase("") && args[1] != null){
 
-                    if(args[1] == "/" || args[1] == "*")
-                        args[2] = "1";
-                    else
-                        args[2] = "0";
+                        paizei malakia edw otan patas dia diairei me miden
+
+                        if(args[1] == "/" || args[1] == "*")
+                            args[2] = "1";
+                        else
+                            args[2] = "0";
+                    }
+                    else{
+                        args[2] = second;
+                    }
+
+                    askForResult(args);
                 }
-                else{
-                    args[2] = second;
-                }
-
-                askForResult(args);
             }
         });
-    }
 
+
+
+        //Log.e("CLASS", toSpinner.getItemAtPosition(43).getClass().toString()); //Returns CurrencyInfo object
+        //TODO Set the convert button asshole!!
+
+    }
 
 
 
@@ -133,6 +163,7 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         outState.putString(SECOND_ARG_TAG, args[1]);
         outState.putString(THIRD_ARG_TAG, args[2]);
         outState.putString(DISPLAYED_VALUE_TAG, displayTxtView.getText().toString());
+        outState.putBoolean(RESULT_IN_TAG, resultIn);
     }
 
 
@@ -170,8 +201,8 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
     private void setClearButtons()
     {
-        clearAllButton = findViewById(R.id.clear_all);
-        clearAllButton.setOnClickListener(new View.OnClickListener()
+
+        findViewById(R.id.clear_all).setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) //clear all
@@ -181,17 +212,23 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
                 args[2] = null;
 
                 displayTxtView.setText("");
+
+                resultIn = false;
             }
         });
 
         
         //set button and functionality that clears last entry
-        clearLastButton = findViewById(R.id.clear_last);
-        clearLastButton.setOnClickListener(new View.OnClickListener()
+        findViewById(R.id.clear_last).setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) //if there is entry, remove it. Else if there is symbol selected, cancel it
             {
+                if(resultIn){
+                    displayTxtView.setText("");
+                    resultIn = false;
+                }
+
                 boolean hasEntry = !displayTxtView.getText().toString().equalsIgnoreCase("");
 
                 if (hasEntry) //delete last digit from the display
@@ -223,6 +260,22 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
 
 
+    private ArrayList<CurrencyInfo> initializeSpinnerObjects() {
+
+        ArrayList<CurrencyInfo> curObjects = new ArrayList<>();
+
+        String[] codes = getResources().getStringArray(R.array.coin_codes_sorted);
+
+        String highOrLowRes = (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) ? "48" : "64";
+
+        for(String code : codes){
+
+            CurrencyInfo curInfo = new CurrencyInfo(code, highOrLowRes);
+            curObjects.add(curInfo);
+        }
+
+        return curObjects;
+    }
 
 
 
@@ -273,9 +326,86 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
 
 
+
+
     //CUSTOM ADAPTER FOR THE SPINNERS
 
-    private class ToConvertAdapter extends ArrayAdapter<CurrencyInfo>
+    private class ConvertOptionsAdapter extends ArrayAdapter<CurrencyInfo>{
+
+        private List<CurrencyInfo> rows;
+
+        public ConvertOptionsAdapter(@NonNull Context context, int resource, @NonNull List<CurrencyInfo> objects) {
+            super(context, resource, objects);
+
+            this.rows = objects;
+
+
+        }
+
+
+        @Override
+        public int getCount() {
+            return rows.size();
+        }
+
+
+        @Nullable
+        @Override
+        public CurrencyInfo getItem(int position) {
+            return rows.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+            View result = convertView;
+
+            if(result == null)
+                result = getLayoutInflater().inflate(R.layout.spinner_row, parent, false);
+
+            CurrencyInfo info = rows.get(position);
+
+            AppCompatImageView imageView = result.findViewById(R.id.the_flag);
+            Bitmap flag =  mPresenter.fetchFlag(getApplicationContext(), info.getFlagPath());
+            imageView.setImageBitmap(flag);
+
+            AppCompatTextView codeTxt = result.findViewById(R.id.coin_name);
+            codeTxt.setText(info.getCode());
+
+            return result;
+
+        }
+
+
+        @Override
+        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+            View result = convertView;
+
+            if(result == null)
+                result = getLayoutInflater().inflate(R.layout.spinner_row, parent, false);
+
+            CurrencyInfo info = rows.get(position);
+
+            AppCompatImageView imageView = result.findViewById(R.id.the_flag);
+            Bitmap flag =  mPresenter.fetchFlag(getApplicationContext(), info.getFlagPath());
+            imageView.setImageBitmap(flag);
+
+            AppCompatTextView codeTxt = result.findViewById(R.id.coin_name);
+            codeTxt.setText(info.getCode());
+
+            return result;
+        }
+
+
+    }
 
 
 

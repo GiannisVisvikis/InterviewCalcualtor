@@ -1,5 +1,9 @@
 package visvikis.ioannis.interviewcalculator;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+
+
 public class ThePresenter implements ProjectInterfaces.ThePresenterInterface
 {
     private ThePresenter instance;
@@ -23,6 +27,13 @@ public class ThePresenter implements ProjectInterfaces.ThePresenterInterface
         }
 
         mCalcView.setResponse(modelResponse);
+    }
+
+
+    @Override
+    public Bitmap fetchFlag(Context applicationContext, String flagPath) {
+
+        return mTheModel.getTheFlag(applicationContext, flagPath);
     }
 
 
