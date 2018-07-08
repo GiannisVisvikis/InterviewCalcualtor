@@ -2,7 +2,7 @@
 <resources>
 
     <dimen name="display_size">22sp</dimen>
-    <dimen name="letter_size">20sp</dimen>
-    <dimen name="spinner_size">14sp</dimen>
+    <dimen name="letter_size">18sp</dimen>
+    <dimen name="spinner_size">12sp</dimen>
 
 </resources>
