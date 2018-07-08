@@ -405,7 +405,7 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
               @Override
               public android.support.v4.content.Loader<MediaPlayer> onCreateLoader(int id, @Nullable Bundle args)
               {
-                  return new SoundLoader(CalculatorView.this);
+                  return new SoundLoader(getApplicationContext());
               }
 
               @Override
