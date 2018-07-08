@@ -62,12 +62,12 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         fromSpinner.setAdapter(conversionAdapter);
         toSpinner.setAdapter(conversionAdapter);
 
+        args = new String[3];
 
         //Check prior state
         if(savedInstanceState == null){
-            args = new String[3];
             fromSpinner.setSelection(43);
-            toSpinner.setSelection(43);
+            toSpinner.setSelection(143);
         }
         else{
             args[0] = savedInstanceState.getString(FIRST_ARG_TAG);
@@ -277,7 +277,9 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
     @Override
     public void setResponse(String response)
     {
-        displayTxtView.setText(response);
+        if(response.length() <= 22)
+            displayTxtView.setText(response);
+        else displayTxtView.setText("Too big");
 
         //re initialize for next operation
         args[0] = null;
@@ -326,7 +328,7 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
             String current = displayTxtView.getText().toString();
             String toAdd = ((AppCompatButton) v).getText().toString();
-            if(current.length() + toAdd.length() <= 14)
+            if(current.length() + toAdd.length() <= 16)
                 current += toAdd;
             displayTxtView.setText(current);
 
@@ -344,13 +346,31 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         {
             String current = displayTxtView.getText().toString();
 
-            args[0] = (current.equalsIgnoreCase("") ? "0" : current);
+            AppCompatButton buttonClicked = ( (AppCompatButton) v );
 
-            args[1] = ((AppCompatButton) v).getText().toString();
+            /*
+            if(buttonClicked.getText().toString().equalsIgnoreCase("*"))
+                args[0] = (current.equalsIgnoreCase("") ? "1" : current);
+            else
+                args[0] = (current.equalsIgnoreCase("") ? "0" : current);
+            */
 
-            //set it to stand by for the second input
-            displayTxtView.setText("");
+            try{
+                Double.parseDouble(current);
+
+                args[0] = current;
+                args[1] = buttonClicked.getText().toString();
+
+                //set it to stand by for the second input
+                displayTxtView.setText("");
+
+            }
+            catch (NumberFormatException e){
+                setResponse("Type in a number");
+            }
+
         }
+
     }
 
 
@@ -367,7 +387,6 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
             super(context, resource, objects);
 
             this.rows = objects;
-
 
         }
 

@@ -8,15 +8,21 @@ import com.google.gson.annotations.SerializedName;
 public class ApiResponsePojo
 {
 
-    @SerializedName("success")
-    private String code;
+    private boolean success;
+
+    public ErrorObject getError()
+    {
+        return error;
+    }
+
+    private ErrorObject error;
 
     @SerializedName("rates")
     private JsonObject results;
 
-    public String getCode()
+    public boolean getCode()
     {
-        return code;
+        return success;
     }
 
     public JsonObject getResults()

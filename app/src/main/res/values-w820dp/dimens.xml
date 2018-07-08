@@ -1,7 +1,7 @@
 <resources>
 
-    <dimen name="display_size">30sp</dimen>
-    <dimen name="letter_size">27sp</dimen>
-    <dimen name="spinner_size">25sp</dimen>
+    <dimen name="display_size">28sp</dimen>
+    <dimen name="letter_size">25sp</dimen>
+    <dimen name="spinner_size">22sp</dimen>
 
 </resources>

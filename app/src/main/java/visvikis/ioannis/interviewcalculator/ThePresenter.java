@@ -51,19 +51,34 @@ public class ThePresenter implements ProjectInterfaces.ThePresenterInterface
 
                         ApiResponsePojo pojo = response.body();
 
-                        JsonObject codesObject =  pojo.getResults();
+                        boolean code = pojo.getCode();
 
-                        String fromValueString = pojo.getResults().get(from).getAsString();
-                        String toValueString = pojo.getResults().get(to).getAsString();
+                        if(code){
 
-                        double fromValue = Double.parseDouble(fromValueString);
-                        double toValue = Double.parseDouble(toValueString);
-                        double amountValue = Double.parseDouble(amount);
+                            JsonObject codesObject =  pojo.getResults();
 
-                        double result = (toValue/fromValue) * amountValue;
-                        String backToUser = String.format( "%.2f", result);
+                            Log.e("ERROR_OBJECT_IS_NULL", (pojo.getError() == null) + "");
 
-                        mCalcView.setResponse(backToUser);
+                            String fromValueString = codesObject.get(from).getAsString();
+                            String toValueString = codesObject.get(to).getAsString();
+
+                            double fromValue = Double.parseDouble(fromValueString);
+                            double toValue = Double.parseDouble(toValueString);
+                            double amountValue = Double.parseDouble(amount);
+
+                            double result = (toValue/fromValue) * amountValue;
+                            String backToUser = String.format( "%.2f", result);
+
+                            mCalcView.setResponse(backToUser);
+                        }
+                        else {
+
+                            ErrorObject errorObject = pojo.getError();
+
+                            //display why there was not a normal response
+                            mCalcView.setResponse(errorObject.getInfo());
+
+                        }
 
                     }
                     else {
