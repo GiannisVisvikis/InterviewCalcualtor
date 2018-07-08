@@ -12,6 +12,7 @@ public interface ProjectInterfaces
 
         void setResponse(String response);
 
+        void playSound();
     }
 
 

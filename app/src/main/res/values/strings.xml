@@ -4,8 +4,11 @@
     <string name="api_key">04e5639399536e338a6d4ec171edd4af</string>
     <string name="convert_message">Converting...</string>
     <string name="no_internet_response">No Internet</string>
-    <string name="api_not_responding">No response. Try later</string>
+    <string name="api_not_responding">No response.Please try later</string>
     <string name="not_a_number">Type in a number</string>
+    <string name="swap_currency">Swap Currency</string>
+    <string name="sounds_on">Sound On</string>
+    <string name="sounds_off">Sound Off</string>
 
     <string-array name="coin_codes_sorted">
         <item>AED</item>

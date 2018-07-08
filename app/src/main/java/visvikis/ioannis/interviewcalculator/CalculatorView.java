@@ -1,7 +1,11 @@
 package visvikis.ioannis.interviewcalculator;
 
+import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Loader;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,16 +17,22 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CalculatorView extends AppCompatActivity implements ProjectInterfaces.TheViewInteface
 {
 
+    private final String CALCULATOR_PREFERENCES = "visvikis.ioannis.currencycalculator.PREFERENCES_SOUNDS";
     private final String FIRST_ARG_TAG = "FIRST_ARG";
     private final String SECOND_ARG_TAG = "SECOND_ARG";
     private final String THIRD_ARG_TAG = "THIRD_ARG";
@@ -30,8 +40,15 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
     private final String RESULT_IN_TAG = "RESULT_IN";
     private final String FROM_SPINNER_INDEX = "FROM_SPINNER_INDEX";
     private final String TO_SPINNER_INDEX = "TO_SPINNER_INDEX";
+    private final String PREFERENCES_SOUND_KEY = "PREFERENCES_SOUND";
+
+    private Menu menu;
+
+    private AppCompatSpinner fromSpinner;
+    private AppCompatSpinner toSpinner;
 
     private boolean resultIn = false;
+    private boolean soundsOn;
 
     private ThePresenter mPresenter;
 
@@ -48,10 +65,13 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator_view);
 
+
+        //get sounds on or off. Default sounds on if user not selected otherwise
+        soundsOn = getSharedPreferences(CALCULATOR_PREFERENCES, MODE_PRIVATE).getBoolean(PREFERENCES_SOUND_KEY, true);
+
         displayTxtView = findViewById(R.id.textview);
 
         //initialize the spinners for conversion
-
         final AppCompatSpinner fromSpinner = findViewById(R.id.from_spinner);
         final AppCompatSpinner toSpinner = findViewById(R.id.to_spinner);
 
@@ -61,6 +81,9 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
         fromSpinner.setAdapter(conversionAdapter);
         toSpinner.setAdapter(conversionAdapter);
+
+        setFromSpinner(fromSpinner);
+        setToSpinner(toSpinner);
 
         args = new String[3];
 
@@ -144,7 +167,6 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
 
         //Log.e("CLASS", toSpinner.getItemAtPosition(43).getClass().toString()); //Returns CurrencyInfo object
-        //TODO Set the convert button asshole!!
         AppCompatButton conversionButton = findViewById(R.id.convert);
         conversionButton.setOnClickListener(new View.OnClickListener()
         {
@@ -156,7 +178,9 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
                     String from = ((CurrencyInfo) fromSpinner.getSelectedItem()).getCode();
                     String to = ((CurrencyInfo) toSpinner.getSelectedItem()).getCode();
-                    String amount = displayTxtView.getText().toString();
+
+                    //some language settings (Greek) return comma instead of a dot at decimal place, throwing an error
+                    String amount = displayTxtView.getText().toString().replace(',', '.');
 
                     if(!from.equalsIgnoreCase(to)){ //no need to convert the same currency
 
@@ -167,8 +191,8 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
                         catch (NumberFormatException nfe){
                             setResponse(getResources().getString(R.string.not_a_number));
                         }
+                        
                     }
-
                 }
 
             }
@@ -191,8 +215,86 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        this.menu = menu;
+
+        MenuItem soundsMenuItem = menu.findItem(R.id.sounds_option);
+
+        if(soundsOn)
+            soundsMenuItem.setTitle("Sound Off");
+        else
+            soundsMenuItem.setTitle("Sound On");
+
+        return true;
+    }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()){
+
+            case R.id.swap_option: //swap currency selections
+                int fromIndex = getFromSpinner().getSelectedItemPosition();
+                int toIndex = getToSpinner().getSelectedItemPosition();
+                getFromSpinner().setSelection(toIndex);
+                getToSpinner().setSelection(fromIndex);
+                return true;
+
+            case R.id.sounds_option:
+                soundsOn = !soundsOn;
+                storeSoundOption(soundsOn);
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+
+
+    private void storeSoundOption(boolean soundOnOrOff)
+    {
+        SharedPreferences sp = getSharedPreferences(CALCULATOR_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.putBoolean(PREFERENCES_SOUND_KEY, soundOnOrOff);
+        editor.apply();
+
+        MenuItem soundsMenuItem = menu.findItem(R.id.sounds_option);
+
+        if(soundsOn)
+            soundsMenuItem.setTitle("Sound Off");
+        else
+            soundsMenuItem.setTitle("Sound On");
+
+    }
+
+
+    private void setFromSpinner(AppCompatSpinner fromSpinner){
+        this.fromSpinner = fromSpinner;
+    }
+
+    private AppCompatSpinner getFromSpinner(){
+        return this.fromSpinner;
+    }
+
+    private void setToSpinner(AppCompatSpinner toSpinner){
+        this.toSpinner = toSpinner;
+    }
+
+    private AppCompatSpinner getToSpinner(){
+        return this.toSpinner;
+    }
+
+
+    //Already tried hardcoding it in every symbol button via android:onClick in XML because it is so similar functionality
+    // but AppCompat library causes issues
     private void setSymbolButtons()
     {
         SymbolListener symbolListener = new SymbolListener();
@@ -204,6 +306,8 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
     }
 
 
+    //Already tried hardcoding it in every digit button via android:onClick in XML because it is so similar functionality
+    // but AppCompat library causes issues
     private void setDigitButtons()
     {
         DigitListener digitListener = new DigitListener();
@@ -241,7 +345,7 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
             }
         });
 
-        
+
         //set button and functionality that clears last entry
         findViewById(R.id.clear_last).setOnClickListener(new View.OnClickListener()
         {
@@ -289,7 +393,42 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         resultIn = true;
     }
 
+    @Override
+    public void playSound()
+    {
+        if(soundsOn){
 
+            // Load the sound in the background from the assets folder
+          getSupportLoaderManager().restartLoader(0, null, new android.support.v4.app.LoaderManager.LoaderCallbacks<MediaPlayer>()
+          {
+              @NonNull
+              @Override
+              public android.support.v4.content.Loader<MediaPlayer> onCreateLoader(int id, @Nullable Bundle args)
+              {
+                  return new SoundLoader(CalculatorView.this);
+              }
+
+              @Override
+              public void onLoadFinished(@NonNull android.support.v4.content.Loader<MediaPlayer> loader, MediaPlayer data)
+              {
+
+                  Log.e("LOADER_CALLED" , "true");
+
+                  if(data != null)
+                      data.start();
+              }
+
+              @Override
+              public void onLoaderReset(@NonNull android.support.v4.content.Loader<MediaPlayer> loader)
+              {
+
+              }
+          });
+            
+        }
+        
+        
+    }
 
     private ArrayList<CurrencyInfo> initializeSpinnerObjects() {
 
@@ -307,9 +446,6 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
         return curObjects;
     }
-
-
-
 
 
 
@@ -348,14 +484,8 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
             AppCompatButton buttonClicked = ( (AppCompatButton) v );
 
-            /*
-            if(buttonClicked.getText().toString().equalsIgnoreCase("*"))
-                args[0] = (current.equalsIgnoreCase("") ? "1" : current);
-            else
-                args[0] = (current.equalsIgnoreCase("") ? "0" : current);
-            */
-
             try{
+                //check that it is number that you're dealing with
                 Double.parseDouble(current);
 
                 args[0] = current;
@@ -454,8 +584,6 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
 
 
     }
-
-
 
 
 }
