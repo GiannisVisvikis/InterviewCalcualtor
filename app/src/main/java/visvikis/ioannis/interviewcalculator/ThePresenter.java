@@ -70,7 +70,7 @@ public class ThePresenter implements ProjectInterfaces.ThePresenterInterface
                             String backToUser = String.format( "%.2f", result);
 
                             mCalcView.setResponse(backToUser);
-                            mCalcView.playSound();
+                            mCalcView.playRawSound();
                         }
                         else {
 

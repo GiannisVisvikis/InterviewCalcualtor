@@ -23,7 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -393,42 +392,29 @@ public class CalculatorView extends AppCompatActivity implements ProjectInterfac
         resultIn = true;
     }
 
+
     @Override
-    public void playSound()
+    public void playRawSound()
     {
         if(soundsOn){
+            MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.coins_in_cloth);
 
-            // Load the sound in the background from the assets folder
-          getSupportLoaderManager().restartLoader(0, null, new android.support.v4.app.LoaderManager.LoaderCallbacks<MediaPlayer>()
-          {
-              @NonNull
-              @Override
-              public android.support.v4.content.Loader<MediaPlayer> onCreateLoader(int id, @Nullable Bundle args)
-              {
-                  return new SoundLoader(getApplicationContext());
-              }
+            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+            {
+                @Override
+                public void onCompletion(MediaPlayer mp)
+                {
+                    mp.release();
+                }
+            });
 
-              @Override
-              public void onLoadFinished(@NonNull android.support.v4.content.Loader<MediaPlayer> loader, MediaPlayer data)
-              {
-
-                  Log.e("LOADER_CALLED" , "true");
-
-                  if(data != null)
-                      data.start();
-              }
-
-              @Override
-              public void onLoaderReset(@NonNull android.support.v4.content.Loader<MediaPlayer> loader)
-              {
-
-              }
-          });
-            
+            mp.start();
         }
-        
-        
     }
+
+
+
+
 
     private ArrayList<CurrencyInfo> initializeSpinnerObjects() {
 
